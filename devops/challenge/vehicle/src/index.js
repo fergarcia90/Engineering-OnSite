@@ -34,15 +34,11 @@ async function postVehicle(userId, veicle) {
 }
 
 api.get('/user/:userId/vehicle', (req, res) => {
-  getVehicles(req.params.userId).then((user) => {
-    return res.send(user);
-  });
+  getVehicles(req.params.userId).then(user => res.send(user));
 });
 
 api.post('/user/:userId/vehicle', (req, res) => {
-  postVehicle(req.params.userId, req.body).then(() => {
-    return res.send('ok');
-  }).catch((error) => {
+  postVehicle(req.params.userId, req.body).then(() => res.send('ok')).catch((error) => {
     res.status(400);
     res.send('error');
     console.log(error);

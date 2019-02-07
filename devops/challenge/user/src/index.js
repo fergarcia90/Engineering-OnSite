@@ -27,39 +27,29 @@ async function getUser(userId) {
   return {
     id: result.rows[0].id,
     name: result.rows[0].name,
-    vehicles
+    vehicles,
   };
 }
 
 async function postUser(data) {
   const queryString = `INSERT INTO public."user" (name) VALUES ('${data.user.name}')`;
-  const userId = await pool.query(queryString).then(() => {
-      return pool.query(`SELECT currval('user_id_seq');`).then((resultQuery) => {
-        return resultQuery.rows[0].currval;
-      });
-    })
+  const userId = await pool.query(queryString).then(() => pool.query('SELECT currval(\'user_id_seq\');').then(resultQuery => resultQuery.rows[0].currval))
     .catch((error) => {
       console.log('Error on Query\n\n', error);
     });
 
   console.log(`inserted user '${data.user.name}' with id: ${userId}`);
-  const promises = data.user.vehicles.map((vehicle) => {
-    return request.post(`${vProtocol}://${vHost}:${vPort}/user/${userId}/vehicle`,
-      {json: vehicle});
-  });
+  const promises = data.user.vehicles.map(vehicle => request.post(`${vProtocol}://${vHost}:${vPort}/user/${userId}/vehicle`,
+    { json: vehicle }));
   return Promise.all(promises);
 }
 
 api.get('/user/:userId', (req, res) => {
-  getUser(req.params.userId).then((user) => {
-    return res.send(user);
-  });
+  getUser(req.params.userId).then(user => res.send(user));
 });
 
 api.post('/user', (req, res) => {
-  postUser(req.body).then(() => {
-    return res.send('ok');
-  }).catch((error) => {
+  postUser(req.body).then(() => res.send('ok')).catch((error) => {
     res.status(400);
     res.send('error');
     console.log(error);

@@ -1,6 +1,6 @@
 module.exports = {
   api: {
-    port: '8085'
+    port: '8085',
   },
   services: {
     database: {
@@ -8,7 +8,7 @@ module.exports = {
       port: 5432,
       user: 'postgres',
       database: 'onsite',
-      password: 'postgres'
-    }
-  }
+      password: 'postgres',
+    },
+  },
 };

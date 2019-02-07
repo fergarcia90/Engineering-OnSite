@@ -1,6 +1,6 @@
 module.exports = {
   api: {
-    port: 'PORT'
+    port: 'PORT',
   },
   services: {
     database: {
@@ -8,7 +8,7 @@ module.exports = {
       port: 'DATABASE_PORT',
       user: 'DATABASE_USER',
       database: 'DATABASE_NAME',
-      password: 'DATABASE_PASSWORD'
-    }
-  }
+      password: 'DATABASE_PASSWORD',
+    },
+  },
 };

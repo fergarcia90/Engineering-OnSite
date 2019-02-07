@@ -4,7 +4,9 @@
   "description": "user service",
   "main": "src/index.js",
   "scripts": {
-    "test": "test",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint-fix": "./node_modules/.bin/eslint --fix .",
+    "test": "./node_modules/.bin/mocha test --recursive",
     "start": "node src/index.js"
   },
   "author": "Crabi",
@@ -18,6 +20,8 @@
   },
   "devDependencies": {
     "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
     "mocha": "^5.2.0"
   }
 }
