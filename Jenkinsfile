@@ -26,13 +26,13 @@ pipeline {
       steps {
         checkout scm
         dir("./devops/challenge/user/"){
-          sh "docker image build -t garciacfer/onsite-devops-user:latest"
+          sh "docker image build -t garciacfer/onsite-devops-user:latest ."
           withDockerRegistry([credentialsId: "39ca033e-a04f-44f9-8d26-5ac8546d5a58", url: ""]) {
               sh "docker image push garciacfer/onsite-devops-user:latest"
           }
         }
         dir("./devops/challenge/vehicle/"){
-          sh "docker image build -t garciacfer/onsite-devops-vehicle:latest"
+          sh "docker image build -t garciacfer/onsite-devops-vehicle:latest ."
           withDockerRegistry([credentialsId: "39ca033e-a04f-44f9-8d26-5ac8546d5a58", url: ""]) {
               sh "docker image push garciacfer/onsite-devops-vehicle:latest"
           }
