@@ -6,6 +6,7 @@ pipeline {
       agent { docker 'node:8-alpine'}
       steps {
         checkout scm
+        sh "echo Hello"
         dir("./devops/challenge/user/") {
           sh "npm install"
           sh "npm run test"
