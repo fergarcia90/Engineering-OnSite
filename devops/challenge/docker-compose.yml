@@ -1,0 +1,39 @@
+version: '3'
+services:
+  onsite-db-vehicle:
+    image: "postgres:alpine"
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=onsite"
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./schema:/docker-entrypoint-initdb.d/
+
+  onsite-db-user:
+    image: "postgres:alpine"
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=onsite"
+    ports:
+      - '5433:5432'
+    volumes:
+      - ./schema:/docker-entrypoint-initdb.d/
+
+  onsite-devops-vehicle:
+    build: ./vehicle
+    image: garciacfer/onsite-devops-vehicle
+    ports:
+      - '8085:8085'
+    depends_on:
+      - onsite-db-vehicle
+
+  onsite-devops-user:
+    build: ./user
+    image: garciacfer/onsite-devops-user
+    ports:
+      - '9090:8080'
+    depends_on:
+      - onsite-db-user
